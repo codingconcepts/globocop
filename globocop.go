@@ -47,7 +47,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 
 		pass.Report(analysis.Diagnostic{
 			Pos:     ident.Pos(),
-			Message: fmt.Sprintf("global variable or constant %s", ident.Name),
+			Message: fmt.Sprintf("global %s %q", ident.Obj.Kind, ident.Name),
 		})
 
 		return false
