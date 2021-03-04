@@ -20,6 +20,14 @@ const (
 	ExportedConstant = "exported"
 )
 
+// unexportedType allows us to check that globocop doesn't pick up
+// unexported types.
+type unexportedType struct{}
+
+// ExportedType allows us to check that globocop doesn't pick up
+// exported types.
+type ExportedType struct{}
+
 // unexportedFunction allows us to check that globocop doesn't pick up
 // identifiers in unexported functions.
 func unexportedFunction() {
@@ -43,7 +51,7 @@ func ExportedFunction() {
 	_ = insideVariable
 
 	// inside allows us to check that globocop doens't pick up
-	// non-global constants.
+	//non-global constants.
 	const insideConstant = 2
 	_ = insideConstant
 }

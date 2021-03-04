@@ -37,16 +37,18 @@ func run(pass *analysis.Pass) (interface{}, error) {
 
 		// Bail if we don't have enough to figure out what this identifier is.
 		if ident.Obj == nil || ident.Obj.Data == nil {
-			return false
+			return true
 		}
 
-		// Bail if the identifier isn't at the global level.
+		// Bail if the identifier isn't at the global level (and recurs
+		// into nested nodes).
 		if len(stack) > 4 {
-			return false
+			return true
 		}
 
-		// Bail if it's a constant, these can't be modified, so pose less of a problem.
-		if ident.Obj.Kind == ast.Con {
+		// Bail if it's not a variable (and don't recurs into nested nodes,
+		// as we're outside of functions and types etc).
+		if ident.Obj.Kind != ast.Var {
 			return false
 		}
 
@@ -55,7 +57,7 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			Message: fmt.Sprintf("global var %q", ident.Name),
 		})
 
-		return false
+		return true
 	})
 
 	return nil, nil
