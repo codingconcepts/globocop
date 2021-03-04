@@ -45,9 +45,14 @@ func run(pass *analysis.Pass) (interface{}, error) {
 			return false
 		}
 
+		// Bail if it's a constant, these can't be modified, so pose less of a problem.
+		if ident.Obj.Kind == ast.Con {
+			return false
+		}
+
 		pass.Report(analysis.Diagnostic{
 			Pos:     ident.Pos(),
-			Message: fmt.Sprintf("global %s %q", ident.Obj.Kind, ident.Name),
+			Message: fmt.Sprintf("global var %q", ident.Name),
 		})
 
 		return false
