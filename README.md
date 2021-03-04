@@ -3,6 +3,9 @@ A static analysis tool that checks for global variables in Go code.
 
 ## Installation
 
+```
+$ go get -u github.com/codingconcepts/globocop
+```
 
 ## Usage
 

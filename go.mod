@@ -1,4 +1,4 @@
-module globocop
+module github.com/codingconcepts/globocop
 
 go 1.16
 
